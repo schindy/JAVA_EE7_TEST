@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h1>
+			<h:outputText value="#{aktionEditController.title}" />
+		</h1>
+		<h:form acceptcharset="ISO-8859-1">
+			<p:tabView>
+				<p:tab title="Allgemein">
+					<h:panelGrid columns="3">
+						<f:facet name="header">Allgemein</f:facet>
+						<h:outputLabel value="Name:"></h:outputLabel>
+						<p:inputText id="a_name"
+							value="#{aktionEditController.aktion.name}"
+							validatorMessage="Der Name einer Aktion muss min. 4 und darf max. 30 Zeichen lang sein.">
+							<f:validateRequired />
+							<f:validateLength minimum="4" maximium="30" />
+						</p:inputText>
+						<p:message for="a_name" style="color: red;" />
+						<h:outputLabel value="Spendenziel:"></h:outputLabel>
+						<h:panelGroup>
+							<p:inputText id="a_spendenziel"
+								value="#{aktionEditController.aktion.spendeZiel}"
+								validatorMessage="Das Spendenziel für die Aktion muss min. 10 Euro sein.">
+								<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+								<f:validateRequired />
+								<f:validateDoubleRange minimum="10.0" />
+							</p:inputText> EUR
+ 	</h:panelGroup>
+						<p:message for="a_spendenziel" style="color: red;" />
+						<h:outputLabel value="Spendenbetrag:"></h:outputLabel>
+						<h:panelGroup>
+							<p:inputText id="a_spendenbetrag"
+								value="#{aktionEditController.aktion.spendenBetrag}"
+								validatorMessage="Der Spendenbetrag muss min. 1 Euro sein.">
+								<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+								<f:validateRequired />
+								<f:validateDoubleRange minimum="1.0" />
+							</p:inputText> EUR
+ 	</h:panelGroup>
+						<p:message for="a_spendenbetrag" style="color: red;" />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="Bankverbindung">
+					<h:panelGrid columns="3">
+						<f:facet name="header">Bankverbindung</f:facet>
+						<h:outputLabel value="Name:"></h:outputLabel>
+						<p:inputText id="b_name"
+							value="#{aktionEditController.aktion.konto.name}">
+							<f:validateRequired />
+						</p:inputText>
+						<p:message for="b_name" style="color: red;" />
+						<h:outputLabel value="Konto-Nr.:"></h:outputLabel>
+						<p:inputText id="b_konto"
+							value="#{aktionEditController.aktion.konto.kontoNr}">
+							<f:validateRequired />
+						</p:inputText>
+						<p:message for="b_konto" style="color: red;" />
+						<h:outputLabel value="BLZ:"></h:outputLabel>
+						<p:inputText id="b_blz"
+							value="#{aktionEditController.aktion.konto.blz}">
+							<f:validateRequired />
+						</p:inputText>
+						<p:message for="b_blz" style="color: red;" />
+						<h:outputLabel value="Name der Bank"></h:outputLabel>
+						<p:inputText id="b_name_bank"
+							value="#{aktionEditController.aktion.konto.nameDerBank}">
+							<f:validateRequired />
+						</p:inputText>
+						<p:message for="b_name_bank" style="color: red;" />
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+			<p:commandButton value="Speichern"
+				action="#{aktionEditController.doSave}" ajax="false" />
+			<p:commandButton value="Abbrechen" immediate="true"
+				action="#{aktionEditController.doCancel}" ajax="false" />
+		</h:form>
+	</ui:define>
+</ui:composition>
